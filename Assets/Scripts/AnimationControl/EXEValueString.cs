@@ -152,7 +152,7 @@ namespace OALProgramControl
         #region Methods
         private static CDClass DefiningClass = null;
         
-        public override bool MethodExists(string methodName, bool includeInherited = false)
+        protected override bool MethodExistsCustom(string methodName, bool includeInherited = false)
         {
             if (DefiningClass == null)
             {
@@ -162,7 +162,7 @@ namespace OALProgramControl
             return DefiningClass.MethodExists(methodName, includeInherited);
         }
 
-        public override CDMethod FindMethod(string methodName, bool includeInherited = false)
+        protected override CDMethod FindMethodCustom(string methodName, bool includeInherited = false)
         {
             if (DefiningClass == null)
             {
@@ -185,6 +185,7 @@ namespace OALProgramControl
             InitializeSubstringMethod();
             InitializeContainsMethod();
             InitializeReplaceMethod();
+            InitializeParseIntMethod();
         }
 
         private void InitializeJoinMethod()
@@ -320,6 +321,12 @@ namespace OALProgramControl
             );
             MethodReplace.ExecutableCode = new EXEScopeBuiltInMethod(MethodReplace, new BuiltInMethodStringReplace());
             DefiningClass.AddMethod(MethodReplace);
+        }
+        private void InitializeParseIntMethod()
+        {
+            CDMethod MethodParseInt = new CDMethod(DefiningClass, "ParseInt", EXETypes.IntegerTypeName);
+            MethodParseInt.ExecutableCode = new EXEScopeBuiltInMethod(MethodParseInt, new BuiltInMethodStringParseInt());
+            DefiningClass.AddMethod(MethodParseInt);
         }
         #endregion
 
