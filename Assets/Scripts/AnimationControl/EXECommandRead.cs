@@ -68,7 +68,12 @@ namespace OALProgramControl
 
             if (readValueType == EPrimitiveType.NotPrimitive)
             {
-                return Error("XEC2026", ErrorMessage.InvalidValueForType(Value, this.AssignmentType));
+                Value = $"\"{Value}\"";
+                readValueType = EXETypes.DeterminePrimitiveType(Value);
+                if (readValueType == EPrimitiveType.NotPrimitive)
+                {
+                    return Error("XEC2026", ErrorMessage.InvalidValueForType(Value, this.AssignmentType));
+                }
             }
 
             EXEValuePrimitive readValue = EXETypes.DeterminePrimitiveValue(Value);
