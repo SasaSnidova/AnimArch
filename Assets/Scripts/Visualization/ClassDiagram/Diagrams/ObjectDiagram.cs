@@ -23,9 +23,9 @@ namespace AnimArch.Visualization.Diagrams
         public List<ObjectInDiagram> Objects { get; private set; }
         public List<ObjectRelation> Relations { get; private set; }
         private Dictionary<long, string> ObjectNamesInDiagram = new Dictionary<long, string>();
-
-
         ObjectDiagramValueVisitor visitor = new ObjectDiagramValueVisitor();
+
+        private bool VisualEnabled => graph==null ? false : graph.isActiveAndEnabled;
 
         private void Awake()
         {
@@ -108,6 +108,8 @@ namespace AnimArch.Visualization.Diagrams
 
         public void ManualLayout()
         {
+            if (!VisualEnabled) { return; }
+
             int i = 0;
             foreach (ObjectInDiagram objectInDiagram in Objects)
             {
@@ -245,12 +247,16 @@ namespace AnimArch.Visualization.Diagrams
 
         public void ShowObject(ObjectInDiagram Object)
         {
+            if (!VisualEnabled) { return; }
+
             Object.VisualObject.SetActive(true);
             graph.Layout();
         }
 
         public ObjectInDiagram AddObjectInDiagram(string variableName, CDClassInstance instance, bool visible = true)
         {
+            if (!VisualEnabled) { return null; }
+
             ObjectInDiagram objectInDiagram = new ObjectInDiagram
             {
                 Class = DiagramPool.Instance.ClassDiagram.FindClassByName(instance.OwningClass.Name),
@@ -271,6 +277,8 @@ namespace AnimArch.Visualization.Diagrams
 
         public void AddRelation(CDClassInstance classInstanceStart, CDClassInstance classInstanceEnd, string relationType)
         {
+            if (!VisualEnabled) { return; }
+
             if (classInstanceStart == classInstanceEnd || classInstanceStart.UniqueID == classInstanceEnd.UniqueID)
             {
                 return;
@@ -319,6 +327,8 @@ namespace AnimArch.Visualization.Diagrams
 
         public bool UpdateAttributeValues(CDClassInstance classInstance)
         {
+            if (!VisualEnabled) { return false; }
+
             ObjectInDiagram objectInDiagram = FindByID(classInstance.UniqueID);
             if (objectInDiagram == null)
             {
