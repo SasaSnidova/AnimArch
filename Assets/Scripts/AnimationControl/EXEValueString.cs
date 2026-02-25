@@ -186,6 +186,7 @@ namespace OALProgramControl
             InitializeContainsMethod();
             InitializeReplaceMethod();
             InitializeParseIntMethod();
+            InitializeParseRealMethod();
         }
 
         private void InitializeJoinMethod()
@@ -327,6 +328,12 @@ namespace OALProgramControl
             CDMethod MethodParseInt = new CDMethod(DefiningClass, "ParseInt", EXETypes.IntegerTypeName);
             MethodParseInt.ExecutableCode = new EXEScopeBuiltInMethod(MethodParseInt, new BuiltInMethodStringParseInt());
             DefiningClass.AddMethod(MethodParseInt);
+        }
+        private void InitializeParseRealMethod()
+        {
+            CDMethod MethodParseReal = new CDMethod(DefiningClass, "ParseReal", EXETypes.RealTypeName);
+            MethodParseReal.ExecutableCode = new EXEScopeBuiltInMethod(MethodParseReal, new BuiltInMethodStringParseReal());
+            DefiningClass.AddMethod(MethodParseReal);
         }
         #endregion
 

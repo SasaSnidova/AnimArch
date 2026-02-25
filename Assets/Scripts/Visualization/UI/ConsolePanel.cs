@@ -30,6 +30,8 @@ namespace Visualization.UI
 
         public void YieldOutput(string output, ConsoleRequestWrite request)
         {
+            output = output.Replace("\\\"", "\"");
+
             tmpOutpField.text += output + "\n";
 
             // Scroll to bottom

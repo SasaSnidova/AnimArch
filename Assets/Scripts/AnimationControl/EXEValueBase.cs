@@ -44,6 +44,7 @@ namespace OALProgramControl
             InitializeRandomReal();
             InitializeRandomInt();
             InitializeRandomBool();
+            InitializeToString();
         }
         private void InitializeReadFileMethod()
         {
@@ -129,6 +130,12 @@ namespace OALProgramControl
         {
             CDMethod MethodContains = new CDMethod(DefiningClass, "RandomBool", EXETypes.BooleanTypeName);
             MethodContains.ExecutableCode = new EXEScopeBuiltInMethod(MethodContains, new BuiltInMethodAllRandomBool());
+            DefiningClass.AddMethod(MethodContains);
+        }
+        private void InitializeToString()
+        {
+            CDMethod MethodContains = new CDMethod(DefiningClass, "ToString", EXETypes.StringTypeName);
+            MethodContains.ExecutableCode = new EXEScopeBuiltInMethod(MethodContains, new BuiltInMethodAllToString());
             DefiningClass.AddMethod(MethodContains);
         }
         #endregion
